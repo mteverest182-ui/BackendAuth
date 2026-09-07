@@ -1,7 +1,7 @@
 import express from "express";
 import { getWhatsappSetting, updateWhatsappSetting,deleteWhatsappSetting, getDashboardStats } from "../controller/dashboard.controller";
-import { authMiddleware } from "../middleware/auth.middleware";
-import { roleMiddleware } from "../middleware/roleMiddleware";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { roleMiddleware } from "../middleware/roleMiddleware.js";
 
 const router = express.Router();
 
