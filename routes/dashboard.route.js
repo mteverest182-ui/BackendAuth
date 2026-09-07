@@ -1,5 +1,5 @@
 import express from "express";
-import { getWhatsappSetting, updateWhatsappSetting,deleteWhatsappSetting, getDashboardStats } from "../controller/dashboard.controller";
+import { getWhatsappSetting, updateWhatsappSetting,deleteWhatsappSetting, getDashboardStats } from "../controller/dashboard.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 import { roleMiddleware } from "../middleware/roleMiddleware.js";
 
