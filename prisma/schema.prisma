@@ -1,0 +1,140 @@
+generator client {
+  provider               = "prisma-client"
+  output                 = "../generated/prisma"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String   @unique
+  password String
+  role Role   @default(ADMIN)
+  status UserStatus @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  slug String @unique
+
+  createdAt DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  product   Product[]
+}
+
+model Product {
+  id            Int       @id @default(autoincrement())
+  name          String
+  brand         String
+  gender  ProductGender?
+  categoryId    Int?
+  category      Category? @relation(fields: [categoryId], references: [id])
+  price         Decimal   @db.Decimal(15, 2)
+  discountPercent Int     @default(0)
+  stock         Int       @default(0)
+  image         String?
+  imagePublicId String?
+  createdAt     DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model AppSetting {
+  id          Int      @id @default(autoincrement())
+  whatsappUrl String   @default("")
+  updatedAt   DateTime @updatedAt
+}
+
+
+enum BannerStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum BannerSlot {
+
+  HERO
+  SECONDARY_LEFT
+  SECONDARY_RIGHT
+
+  MOBILE_FEATURED_1
+  MOBILE_FEATURED_2
+
+  PROMO_1
+  PROMO_2
+  PROMO_3
+  PROMO_4
+}
+
+enum BannerDevice {
+  DESKTOP
+  MOBILE
+}
+
+enum ProductGender {
+MEN
+WOMEN
+
+}
+
+model Banner {
+  id Int @id @default(autoincrement())
+  title String
+  description String?
+  status BannerStatus @default(INACTIVE)
+
+  linkUrl String?
+  slotKey String  @unique
+  startAt DateTime?
+  endAt DateTime?
+  sortOrder Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  images BannerImage[]
+
+  @@index([slotKey])
+  @@index([status])
+  @@index([sortOrder])
+  @@index([startAt, endAt])
+}
+
+model BannerImage {
+  id Int @id @default(autoincrement())
+  bannerId Int
+  banner Banner @relation(fields: [bannerId], references: [id], onDelete: Cascade)
+
+  device BannerDevice
+
+  imageUrl String
+  publicId String
+
+  width Int
+  height Int
+  fileSize Int?
+  mimeType String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([bannerId, device])
+  @@index([bannerId])
+  @@index([device])
+}
