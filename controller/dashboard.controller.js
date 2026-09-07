@@ -1,5 +1,5 @@
 import { success } from "zod";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../utils/prisma.js";
 
 export const getDashboardStats = async (req, res) => {
   try {
