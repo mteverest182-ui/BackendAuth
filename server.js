@@ -11,20 +11,18 @@ import bannerRoutes from "./routes/banner.routes.js";
 
 const app = express();
 
-const allowedOrigins = ["https://ecommercelux.netlify.app", "https://admin-dash-fpkofole0-mteverest182-ui.vercel.app/"];
+const allowedOrigins = ["https://ecommercelux.netlify.app", "https://admin-dash-fpkofole0-mteverest182-ui.vercel.app"];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  }),
-);
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 
 const port = 3000;
 
