@@ -2,7 +2,7 @@ import bcrypt, { compare } from "bcrypt"
 import jwt from "jsonwebtoken"
 import { prisma } from "../utils/prisma.js"
 
-export const jwSecret = process.env.JWTSECRET;
+export const jwtSecret = process.env.JWTSECRET;
 
 export const LoginUser = async(req, res) => {
   try{
