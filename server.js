@@ -11,20 +11,27 @@ import bannerRoutes from "./routes/banner.routes.js";
 
 const app = express();
 
-const allowedOrigins = ["https://ecommercelux.netlify.app", "https://admin-dash-fpkofole0-mteverest182-ui.vercel.app"];
+const allowedOrigins = [
+  "https://ecommercelux.netlify.app",
+  "https://admin-dash-lovat-nine.vercel.app",
+  "https://admin-dash-fpkofole0-mteverest182-ui.vercel.app"
+];
 
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("CORS BLOCKED:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -32,7 +39,6 @@ app.use("/api/users", userRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
-
 app.use("/api/categories", categoryRoutes);
 app.use("/api/banners", bannerRoutes);
 app.use("/api/dashboard", dashboardRoutes);
