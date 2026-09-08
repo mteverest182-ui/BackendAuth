@@ -11,7 +11,7 @@ import bannerRoutes from "./routes/banner.routes.js";
 
 const app = express();
 
-const allowedOrigins = ["https://ecommercelux.netlify.app", "https://admindashs.netlify.app"];
+const allowedOrigins = ["https://ecommercelux.netlify.app", "https://admin-dash-fpkofole0-mteverest182-ui.vercel.app/"];
 
 app.use(
   cors({
