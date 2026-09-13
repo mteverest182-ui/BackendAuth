@@ -83,15 +83,6 @@ const validateBannerFiles = async (
         files || {},
     );
 
-    console.log("VALIDATE FILES:", {
-        required,
-        files: files
-            ? Object.keys(files)
-            : [],
-        fileEntriesLength:
-            fileEntries.length,
-    });
-
     if (
         required &&
         fileEntries.length === 0
@@ -188,20 +179,6 @@ export const createBanner = async (
             endAt,
             sortOrder = 0,
         } = req.body;
-
-        console.log(
-            "CREATE BANNER DATA:",
-            {
-                title,
-                description,
-                slotKey,
-                status,
-                linkUrl,
-                startAt,
-                endAt,
-                sortOrder,
-            },
-        );
 
         /*
          * =========================
@@ -367,38 +344,6 @@ export const createBanner = async (
 
         /*
          * =========================
-         * DEBUG UPLOAD
-         * =========================
-         */
-
-        console.log(
-            "========== BEFORE UPLOAD ==========",
-        );
-
-        console.log(
-            "BANNER ID:",
-            banner.id,
-        );
-
-        console.log(
-            "FILES:",
-            files,
-        );
-
-        console.log(
-            "DESKTOP:",
-            files.desktop?.[0]
-                ?.originalname,
-        );
-
-        console.log(
-            "MOBILE:",
-            files.mobile?.[0]
-                ?.originalname,
-        );
-
-        /*
-         * =========================
          * UPLOAD IMAGES
          * =========================
          */
@@ -408,15 +353,6 @@ export const createBanner = async (
                 files,
                 banner.id,
             );
-
-        console.log(
-            "========== AFTER UPLOAD ==========",
-        );
-
-        console.log(
-            "UPLOADED IMAGES:",
-            uploadedImages,
-        );
 
         /*
          * =========================
@@ -640,17 +576,6 @@ export const getBanners = async (
                     },
                 ],
             });
-
-        console.log(
-            "BANNERS FROM DATABASE:",
-            banners.map((banner) => ({
-                id: banner.id,
-                title: banner.title,
-                slotKey: banner.slotKey,
-                status: banner.status,
-                images: banner.images,
-            })),
-        );
 
         return res.status(200).json({
             message:

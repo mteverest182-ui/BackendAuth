@@ -8,12 +8,13 @@ import userRoutes from "./routes/user.routes.js";
 import categoryRoutes from "./routes/category.route.js";
 import dashboardRoutes from "./routes/dashboard.route.js";
 import bannerRoutes from "./routes/banner.routes.js";
+import orderRoutes from "./routes/order.routes.js"
 
 const app = express();
 
 const allowedOrigins = [
-  "https://ecommercelux.netlify.app",
-  "https://admin-dash-lovat-nine.vercel.app"
+  "http://localhost:5173",
+  "http://localhost:5174"
 ];
 
 app.use(cors({
@@ -40,7 +41,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/banners", bannerRoutes);
-app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/dashboard", dashboardRoutes, orderRoutes);
+
 
 app.listen(port, () => {
   console.log(`server sedang berjalan di port ${port}`);

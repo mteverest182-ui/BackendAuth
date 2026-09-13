@@ -41,4 +41,50 @@ const uploadToCloudinary = (buffer, bannerId) => {
   });
 };
 
-export const uploadBannerImage = async ( file, bannerId, device, ) => { if (!file?.buffer) { throw new Error( `File ${device} tidak memiliki buffer yang valid`, ); } const metadata = await sharp( file.buffer, ).metadata(); if (!metadata.width || !metadata.height) { throw new Error( `Ukuran gambar ${device} tidak dapat dibaca.`, ); } const result = await new Promise( (resolve, reject) => { const stream = cloudinary.uploader.upload_stream( { folder: `ecommerce/banners/${bannerId}`, resource_type: "image", format: "webp", }, (error, result) => { if (error) { reject(error); } else { resolve(result); } }, ); stream.end(file.buffer); }, ); return { device, imageUrl: result.secure_url, publicId: result.public_id, width: metadata.width, height: metadata.height, fileSize: file.size, mimeType: file.mimetype, }; }; export const deleteBannerImage = async ( publicId, ) => { if (!publicId) return; await cloudinary.uploader.destroy( publicId, ); };
+export const uploadBannerImage = async (file, bannerId, device) => {
+  if (!file?.buffer) {
+    throw new Error(`File ${device} tidak memiliki buffer yang valid`);
+  }
+
+  const metadata = await sharp(file.buffer).metadata();
+
+  if (!metadata.width || !metadata.height) {
+    throw new Error(`Ukuran gambar ${device} tidak dapat dibaca`);
+  }
+
+  const result = await new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: `ecommerce/banners/${bannerId}`,
+        resource_type: "image",
+        format: "webp",
+      },
+      (error, result) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        resolve(result);
+      },
+    );
+
+    stream.end(file.buffer);
+  });
+
+  return {
+    device,
+    imageUrl: result.secure_url,
+    publicId: result.public_id,
+    width: metadata.width,
+    height: metadata.height,
+    fileSize: file.size,
+    mimeType: file.mimetype,
+  };
+};
+
+export const deleteBannerImage = async (publicId) => {
+  if (!publicId) return;
+
+  await cloudinary.uploader.destroy(publicId);
+};

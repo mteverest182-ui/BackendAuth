@@ -15,11 +15,9 @@ import { uploadImage } from "../middleware/upload.middleware.js";
 
 const router = express.Router();
 
-// PUBLIC GET
 router.get("/", getBanners);
 router.get("/:id", getBannerById);
 
-// ADMIN CREATE
 router.post(
   "/",
   authMiddleware,
@@ -31,7 +29,6 @@ router.post(
   createBanner,
 );
 
-// ADMIN UPDATE
 router.put(
   "/:id",
   authMiddleware,
@@ -43,7 +40,6 @@ router.put(
   updateBanner,
 );
 
-// ADMIN STATUS
 router.patch(
   "/:id/status",
   authMiddleware,
@@ -51,7 +47,6 @@ router.patch(
   updateBannerStatus,
 );
 
-// ADMIN DELETE
 router.delete(
   "/:id",
   authMiddleware,

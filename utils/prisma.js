@@ -14,9 +14,4 @@ const prisma = new PrismaClient({
   adapter,
 });
 
-console.log(
-  "PRISMA MODELS:",
-  Object.keys(prisma).filter((key) => !key.startsWith("_")),
-);
-
 export { prisma };
