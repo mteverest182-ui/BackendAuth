@@ -13,8 +13,8 @@ import orderRoutes from "./routes/order.routes.js"
 const app = express();
 
 const allowedOrigins = [
-  "admin-dash-4ps2busvb-mteverest182-ui.vercel.app",
-  "https://ecommercelux.netlify.app/"
+  "https://admin-dash-six-theta.vercel.app",
+  "https://ecommercelux.netlify.app"
 ];
 
 app.use(cors({
